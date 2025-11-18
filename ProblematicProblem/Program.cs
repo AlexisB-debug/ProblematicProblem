@@ -6,7 +6,7 @@ namespace ProblematicProblem
 {
     class Program
     {
-        static Random rng;
+        static Random rng = new Random();
         static bool cont = true;
 
         private static List<string> activities = new List<string>()
@@ -16,17 +16,43 @@ namespace ProblematicProblem
         {
             Console.Write(
                 "Hello, welcome to the random activity generator! \nWould you like to generate a random activity? yes/no: ");
-            cont = bool.Parse(Console.ReadLine());
+            string yesOrNo = Console.ReadLine().ToLower();
+
+            while (yesOrNo != "yes" && yesOrNo != "no")
+            {
+                Console.WriteLine("Please, type 'yes' or 'no'.");
+                yesOrNo = Console.ReadLine().ToLower();
+            }
+
+            if (yesOrNo == "no")
+            {
+                Console.WriteLine("Goodbye!");
+                return;
+            }
+
             Console.WriteLine();
             Console.Write("We are going to need your information first! What is your name? ");
             string userName = Console.ReadLine();
             Console.WriteLine();
             Console.Write("What is your age? ");
-            int userAge = int.Parse(Console.ReadLine());
+
+            int userAge;
+            while (!int.TryParse(Console.ReadLine(), out userAge))
+            {
+                Console.WriteLine("Please, type the number of your last birthday.");
+            }
+
             Console.WriteLine();
             Console.Write("Would you like to see the current list of activities? Sure/No thanks: ");
-            bool seeList = bool.Parse(Console.ReadLine());
-            if (seeList)
+            string sureOrNoThanks = Console.ReadLine().ToLower();
+
+            while (sureOrNoThanks != "sure" && sureOrNoThanks != "no thanks")
+            {
+                Console.WriteLine("Please, type 'Sure' or 'No thanks'.");
+                sureOrNoThanks = Console.ReadLine().ToLower();
+            }
+
+            if (sureOrNoThanks == "sure")
             {
                 foreach (string activity in activities)
                 {
@@ -36,9 +62,15 @@ namespace ProblematicProblem
 
                 Console.WriteLine();
                 Console.Write("Would you like to add any activities before we generate one? yes/no: ");
-                bool addToList = bool.Parse(Console.ReadLine());
+                yesOrNo = Console.ReadLine().ToLower();
+                while (yesOrNo != "yes" && yesOrNo != "no")
+                {
+                    Console.WriteLine("Please, type 'yes' or 'no'.");
+                    yesOrNo = Console.ReadLine().ToLower();
+                }
+
                 Console.WriteLine();
-                while (addToList)
+                while (yesOrNo == "yes")
                 {
                     Console.Write("What would you like to add? ");
                     string userAddition = Console.ReadLine();
@@ -51,7 +83,12 @@ namespace ProblematicProblem
 
                     Console.WriteLine();
                     Console.WriteLine("Would you like to add more? yes/no: ");
-                    addToList = bool.Parse(Console.ReadLine());
+                    yesOrNo = Console.ReadLine().ToLower();
+                    while (yesOrNo != "yes" && yesOrNo != "no")
+                    {
+                        Console.WriteLine("Please, type 'yes' or 'no'.");
+                        yesOrNo = Console.ReadLine().ToLower();
+                    }
                 }
             }
 
@@ -87,7 +124,18 @@ namespace ProblematicProblem
                 Console.Write(
                     $"Ah got it! {randomActivity}, your random activity is: {userName}! Is this ok or do you want to grab another activity? Keep/Redo: ");
                 Console.WriteLine();
-                bool cont = bool.Parse(Console.ReadLine());
+                string keepOrRedo = Console.ReadLine().ToLower();
+
+                while (keepOrRedo != "keep" && keepOrRedo != "redo")
+                {
+                    Console.WriteLine("Please, type 'Keep' or 'Redo'.");
+                    keepOrRedo = Console.ReadLine().ToLower();
+                }
+
+                if (keepOrRedo == "keep")
+                {
+                    cont = false;
+                }
             }
         }
     }
